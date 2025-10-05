@@ -93,6 +93,6 @@ class HiAnime : ZoroTheme(
 
     companion object {
         private const val PREF_DOMAIN_KEY = "preferred_domain"
-        private const val PREF_DOMAIN_DEFAULT = "https://hianimez.to"
+        private const val PREF_DOMAIN_DEFAULT = "https://hianime.to"
     }
 }
