@@ -15,7 +15,7 @@ import org.jsoup.nodes.Element
 class HiAnime : ZoroTheme(
     "en",
     "HiAnime",
-    "https://hianimez.to",
+    "https://hianime.to",
     hosterNames = listOf(
         "HD-1",
         "HD-2",
