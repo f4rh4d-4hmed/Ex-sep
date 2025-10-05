@@ -19,26 +19,26 @@ jobs:
           java-version: 17
           distribution: temurin
 
+      - name: Create dummy signing key
+        run: |
+          keytool -genkey -v -keystore signingkey.jks -alias key -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Prepare signing key
-        run: |
-          echo ${{ secrets.SIGNING_KEY }} | base64 -d > signingkey.jks
-
       - name: Build HiAnime extension
         env:
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: key
+          KEY_STORE_PASSWORD: android
+          KEY_PASSWORD: android
         run: chmod +x ./gradlew && ./gradlew :src:en:zoro:assembleRelease
-
-      - name: Clean up CI files
-        run: rm signingkey.jks
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: "hianime-apk"
-          path: "src/en/zoro/build/outputs/apk/debug/*.apk"
+          path: "src/en/zoro/build/outputs/apk/release/*.apk"
           retention-days: 7
+
+      - name: Clean up CI files
+        run: rm signingkey.jks
